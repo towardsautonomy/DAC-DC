@@ -1,0 +1,7 @@
+---------------
+Data Statistics
+---------------
+Center X - [Mean: 546.5818706279194],	 [Std Deviation: 255.31738013657673],	 [Min: 0.0],	 [MAX: 1241.0]
+Center Y - [Mean: 200.82646943411035],	 [Std Deviation: 23.774924134743763],	 [Min: 0.0],	 [MAX: 315.0]
+Width    - [Mean: 57.677924341782564],	 [Std Deviation: 74.26635890080684],	 [Min: 0.0],	 [MAX: 903.0]
+Height   - [Mean: 36.24161805655123],	 [Std Deviation: 42.713202268245254],	 [Min: 0.0],	 [MAX: 374.0]
