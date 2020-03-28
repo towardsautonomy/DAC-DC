@@ -2,7 +2,7 @@ import csv
 import configparser
 import matplotlib.pyplot as plt
 
-from configs import *
+from src.configs import *
 
 # function to plot metrics
 def plot_metrics():

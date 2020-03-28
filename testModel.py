@@ -2,7 +2,7 @@ from keras.models import load_model
 from keras.backend.tensorflow_backend import set_session
 import math
 
-from src.dataLoader import *
+from src.DACDC_DataLoader import DACDC_DataLoader
 from src.model import *
 from src.keras_utils import *
 from src.dacdc_utils import *
@@ -34,13 +34,15 @@ def testModel(model_file, dataset='vkitti'):
                                                    'xy_loss'        : xy_loss,
                                                    'wh_loss'        : wh_loss,
                                                    'conf_loss'      : conf_loss,
+                                                   'class_loss'     : class_loss,
                                                    'iou_loss'       : iou_loss,
                                                    'total_loss'     : total_loss,
                                                    'mean_iou'       : mean_iou})
     print('Model Loaded')
 
     # load data
-    x_train, y_train, x_test, y_test = getData(n_samples=32, test_size=1.0, dim=(resize_img_w, resize_img_h), dataset=dataset)
+    dacdc_dloader = DACDC_DataLoader( data_path, annotated_bbox2d_file)
+    x_train, y_train, x_test, y_test = dacdc_dloader.get_data(n_samples=32, test_size=1.0, dim=(resize_img_w, resize_img_h))
     print('Data Loaded')
 
     # number of samples to perform test on
@@ -52,7 +54,7 @@ def testModel(model_file, dataset='vkitti'):
     y_true = np.array(y_test[0:n_samples_test])
     
     # plot result
-    img = denormalize_img(x_test)
+    img = dacdc_dloader.denormalize_img(x_test)
 
     # grid subplots
     n_cols = 4
@@ -65,8 +67,8 @@ def testModel(model_file, dataset='vkitti'):
             # retrieve label
             img_curr = img[idx]
 
-            bboxes_pred, conf_pred = labels2bboxes(y_pred[idx], [img_curr.shape[0], img_curr.shape[1]])
-            bboxes_true, conf_true = labels2bboxes(y_true[idx], [img_curr.shape[0], img_curr.shape[1]], nms=False)
+            conf_pred, bboxes_pred, classes_pred = labels2bboxes(y_pred[idx], img_size=[img_curr.shape[0], img_curr.shape[1]])
+            conf_true, bboxes_true, classes_true = labels2bboxes(y_true[idx], img_size=[img_curr.shape[0], img_curr.shape[1]],  nms=False)
 
             for k, bbox in enumerate(bboxes_true):
                 # draw bbox if conf is > 50%
@@ -78,7 +80,10 @@ def testModel(model_file, dataset='vkitti'):
                 if(conf_pred[k] > 0.5):
                     img_curr = cv2.rectangle(img_curr, (bbox[0],bbox[1]), (bbox[2],bbox[3]), color=(255,0,0), thickness=2)
                     img_curr = cv2.rectangle(img_curr, (bbox[0],bbox[1]-15), (bbox[0]+75,bbox[1]-2), color=(0,0,0), thickness=-1)
-                    textOnImage(img_curr, (bbox[0], bbox[1]-5), 'Conf: {:.1f}%'.format(conf_pred[k]*100.0), color=(255,255,255), fontScale=0.3, thickness=1)
+                    if CLASS_PREDICTION == True:
+                        textOnImage(img_curr, (bbox[0], bbox[1]-5), classes_true[k]+' {:.1f}%'.format(conf_pred[k]*100.0), color=(255,255,255), fontScale=0.3, thickness=1)
+                    else:
+                        textOnImage(img_curr, (bbox[0], bbox[1]-5), 'Conf {:.1f}%'.format(conf_pred[k]*100.0), color=(255,255,255), fontScale=0.3, thickness=1)
             
             # show result
             plt.imshow(img_curr)

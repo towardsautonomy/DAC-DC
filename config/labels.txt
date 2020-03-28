@@ -1,0 +1,7 @@
+00 Car
+01 Van
+02 Truck
+03 Pedestrian
+04 Cyclist
+05 Misc
+06 Unknown

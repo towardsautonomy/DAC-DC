@@ -1,6 +1,8 @@
 import configparser
-from dataLoader import *
-from configs import *
+import os
+from DACDC_DataLoader import DACDC_DataLoader
+from src.dacdc_utils import *
+from src.configs import *
 
 # this function computes anchor boxes
 def compute_anchor_boxes(annotations):
@@ -21,24 +23,28 @@ def compute_anchor_boxes(annotations):
     X[:,1] = np.asarray(height, dtype=np.float32) / original_img_h
     kmeans = KMeans(n_clusters=n_anchors, random_state=0).fit(X)
 
-    print('---------------')
-    print('Anchor Boxes:')
-    print('---------------')
-    print(kmeans.cluster_centers_)
+    # sort clusters based on area
+    cluster_areas = []
+    for cluster in kmeans.cluster_centers_:
+        cluster_areas.append(cluster[0]*cluster[1])
+    sorted_cluster_centers = [x for _,x in sorted(zip(cluster_areas,kmeans.cluster_centers_))]
+    sorted_cluster_centers = (np.asarray(sorted_cluster_centers)).tolist()
 
     # write to file
     with open(anchor_list_file, 'w') as f:
-        for cluster in kmeans.cluster_centers_:
+        for cluster in sorted_cluster_centers:
             print('{:.4f} {:.4f}'.format(cluster[0], cluster[1]), file=f)
 
+    print('---------------')
+    print('Anchor Boxes:')
+    print('---------------')
+    os.system('cat '+anchor_list_file)
+
 if __name__ == '__main__':
-    dataset='vkitti'
-    if dataset == 'vkitti':
-        _, annotations, _, _, _, _ = \
-            assemble_data_vkitti(n_samples=-1, test_size=0.0, data_path=data_path)
-    else:
-        _, annotations, _, _, _, _ = \
-            assemble_data_bbox_vector(n_samples=-1, test_size=0.0, data_path=data_path)
+    dacdc_dloader = DACDC_DataLoader( data_path, annotated_bbox2d_file)
+
+    _, _, annotations, _, _, _ = \
+        dacdc_dloader.assemble_annotations(n_samples=-1, test_size=0.0)
 
     # compute anchor boxes
     compute_anchor_boxes(annotations)

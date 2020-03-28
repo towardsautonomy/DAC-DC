@@ -116,7 +116,7 @@ def assemble_data_bbox_vector(n_samples=-1, test_size=0.1, data_path=data_path):
     bbox2d_str_ordered = [' ' for i in range(bbox2d_last_idx+1)]
     for i in range(len(bbox2d_str)):
         line = bbox2d_str[i].replace('\n', '').split()
-        if(int(line[1]) > 0): # TODO: Remove this for 3D annotaitons
+        if(int(line[1]) > 0):
             bbox2d_str_ordered[int(line[0])] = line
             bbox2d_exists[int(line[0])] = True
 
@@ -207,7 +207,7 @@ def get_generator(fnames, annotations, flags, batch_size, dim=RESIZE_SHAPE):
                     label = assemble_label(sub_annotations[i], img_size=img_size)
 
                     _X.append(img_norm)
-                    _Y.append(label) # TODO: using only one bbox for now
+                    _Y.append(label) 
             
             yield np.asarray(_X), np.asarray(_Y)
 
