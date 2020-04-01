@@ -54,7 +54,7 @@ It is recommended to use a conda environment for working with DAC-DC. Requiremen
 
  - Download the pretrained weight (Needed for testing or loading the pretrained weights for transfer learning). 
     ```
-    wget https://drive.google.com/file/d/1aGi706ywEgvWlCYTOqEpUnrJa3Ow1Pq2/view?usp=sharing
+    wget https://drive.google.com/file/d/1AeXCO9SwWkr3fz7n9kf35zG7zMhDDgrW/view?usp=sharing
     ```
 
  - Modify data path in ```src/demo.py``` to point to the downloaded dataset.
@@ -79,7 +79,7 @@ It is recommended to use a conda environment for working with DAC-DC. Requiremen
 
  - Download the pretrained weight (Needed for testing or loading the pretrained weights for transfer learning). 
     ```
-    wget https://drive.google.com/file/d/1aGi706ywEgvWlCYTOqEpUnrJa3Ow1Pq2/view?usp=sharing
+    wget https://drive.google.com/file/d/1AeXCO9SwWkr3fz7n9kf35zG7zMhDDgrW/view?usp=sharing
     ```
 
  - Modify the data path of dataset in ```config/config.ini``` by changing the line ```DATA_PATH = ``` 

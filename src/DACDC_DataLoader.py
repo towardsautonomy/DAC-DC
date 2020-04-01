@@ -14,7 +14,7 @@ class DACDC_DataLoader():
 
     # denormalize image
     def denormalize_img(self, X):
-        return np.asarray(np.multiply((X + 0.5), 255.0), dtype=np.int32)
+        return np.asarray(np.multiply((X + 0.5), 255.0), dtype=np.uint8)
 
     def assemble_annotations(self, n_samples=-1, test_size=0.1, shuffle=True):
         lines = []

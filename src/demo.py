@@ -11,9 +11,9 @@ from src.LossFunc import *
 
 import time
 
-data_root = '/home/shubham/workspace/dataset/vKITTI/'
-data_path = data_root+'Scene01/15-deg-left/frames/rgb/Camera_0/*.jpg'
-dst_path = '/home/shubham/workspace/dataset/kitti_training_2dod/'
+data_root = '/home/shubham/workspace/dataset/'
+data_path = data_root+'vKITTI/Scene20/overcast/frames/rgb/Camera_0/*.jpg'
+dst_path = '/home/shubham/workspace/dataset/vkitti_2dod_res/'
 
 model_file = '/home/shubham/workspace/DAC-DC/checkpoints/vkitti_no_class/checkpoint_best.h5'
 resize_dim = (256,256)
@@ -98,4 +98,4 @@ if __name__ == '__main__':
 
         else:
             cv2.imshow('detections', bgr)
-            cv2.waitKey(100)
+            cv2.waitKey(1000)
