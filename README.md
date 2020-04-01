@@ -52,9 +52,9 @@ It is recommended to use a conda environment for working with DAC-DC. Requiremen
     tar -xvf vkitti_2.0.3_rgb.tar
     ``` 
 
- - Download the pretrained weight (Needed for testing or loading the pretrained weights for transfer learning). 
+ - Download the pretrained weight (Needed for testing or loading the pretrained weights for transfer learning) from the link given below:  
     ```
-    wget https://drive.google.com/file/d/1AeXCO9SwWkr3fz7n9kf35zG7zMhDDgrW/view?usp=sharing
+    https://drive.google.com/file/d/1AeXCO9SwWkr3fz7n9kf35zG7zMhDDgrW/view?usp=sharing
     ```
 
  - Modify data path in ```src/demo.py``` to point to the downloaded dataset.
@@ -77,9 +77,9 @@ It is recommended to use a conda environment for working with DAC-DC. Requiremen
 
  - Generate the data labels in DAC-DC format using the script ```src/data_prep/vKITTI2DACDC.py```.  
 
- - Download the pretrained weight (Needed for testing or loading the pretrained weights for transfer learning). 
+ - Download the pretrained weight (Needed for testing or loading the pretrained weights for transfer learning) from the link given below:  
     ```
-    wget https://drive.google.com/file/d/1AeXCO9SwWkr3fz7n9kf35zG7zMhDDgrW/view?usp=sharing
+    https://drive.google.com/file/d/1AeXCO9SwWkr3fz7n9kf35zG7zMhDDgrW/view?usp=sharing
     ```
 
  - Modify the data path of dataset in ```config/config.ini``` by changing the line ```DATA_PATH = ``` 
